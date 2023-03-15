@@ -30,8 +30,8 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["13.50.106.134"]
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ["13.50.106.134"]
 
 
 # Application definition
@@ -49,10 +49,6 @@ INSTALLED_APPS = [
     
   
 ]
-
-
-
-
 
 
 AUTH_USER_MODEL = 'restapp.user'
@@ -120,7 +116,7 @@ DATABASES = {
         'NAME': 'restapp_db',
         'USER':'root',
         "HOST":"localhost",
-        'PASSWORD':"AdMiN@1234",
+        'PASSWORD':config("PASSWORD"),
         "PORT":"3306"
     }
 }
@@ -201,3 +197,5 @@ headers = {"X-Shopify-Access-Token": "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"}
 
 
 
+SHOPIFY_API_KEY = config("SHOPIFY_API_KEY")
+SHOPIFY_API_SECRET = config("SHOPIFY_API_SECRET")

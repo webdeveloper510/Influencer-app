@@ -1,42 +1,31 @@
-
-from rest_framework.views import APIView
+from rest_framework.views import View
 from rest_framework.response import Response
+from django.shortcuts import redirect,render
+from restapi.settings import SHOPIFY_API_KEY,SHOPIFY_API_SECRET
+import requests
 
 
-
-# class shop(APIView):
-#     def post(self,request):    
-#         try:
-#             # session1=shopify.Session("puma-1744.myshopify.com")
-#             # print("==========",session1)
-#             # shop=shopify.ShopifyResource.set_site("https://puma-1744.myshopify.com/")
-#             # print("============",shop)
-#             session=shopify.Session.setup(api_key="95e574f97f5e5829ec18351ee37e81d1", secret="adc3f900c1bfaca31a0a6b120a69249c")
-#             print("------------",session)
-#             shopify.ShopifyResource.activate_session(session)
-
-#             # products = shopify.Product.find()
-#             # print("---",products)
-#             return Response({"success":"product"})
-#         except Exception as e:
-#             print("00000000",e)
-#             return Response({"error":"product"})
-
-
-# # import shopify
-
-
-
-# # SHOPIFY_API_KEY = 'your_api_key'
-# # SHOPIFY_API_PASSWORD = 'your_api_password'
-# # SHOPIFY_STORE_NAME = 'your-shopify-store.myshopify.com'
-
-# # # Authenticate with Shopify
-# # session = shopify.Session(SHOPIFY_STORE_NAME, SHOPIFY_API_KEY, SHOPIFY_API_PASSWORD)
-# # shopify.ShopifyResource.activate_session(session)
-
-# # # Fetch products from the store
-# # products = shopify.Product.find()
-
-# # # Deactivate the Shopify session
-# # shopify.ShopifyResource.clear_session()
+class InstallView(View):
+    def get(self, request):
+        shop=request.GET.get("shop")
+        scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
+        redirect_url = request.build_absolute_uri('/auth')
+        install_url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_url}"
+        return redirect(install_url)
+    
+    
+    
+class AuthView(View):
+    def get(self, request):
+        code = request.GET.get('code')
+        token_url = f"https://your-store-name.myshopify.com/admin/oauth/access_token"
+        data = {
+            "client_id": SHOPIFY_API_KEY,
+            "client_secret": SHOPIFY_API_SECRET,
+            "code": code,
+        }
+        response = requests.post(token_url, data=data)
+        response.raise_for_status()
+        access_token = response.json()['access_token']
+        # Store the access token in the database for later use
+        return render(request, 'auth_success.html')    

@@ -23,4 +23,6 @@ urlpatterns = [
   path('Influencer-list/', InfluencerList.as_view(),name="Influencer-list"),
   path('campaign/',CreateCampaign.as_view(),name="campaign"),
   path('youtuber/',YoutubeFollower.as_view(),name="youtuber"),
+  path("install/",InstallView.as_view(),name="install"),
+  # path("install/",InstallView.as_view(),name="install"),
 ]
