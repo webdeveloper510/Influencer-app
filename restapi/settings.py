@@ -102,16 +102,30 @@ WSGI_APPLICATION = 'restapi.wsgi.application'
 # }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'restapp_db',
+#         'USER':'root',
+#         "HOST":"localhost",
+#         'PASSWORD':"",
+#         "PORT":"3306"
+#     }
+# }
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'restapp_db',
         'USER':'root',
         "HOST":"localhost",
-        'PASSWORD':"",
+        'PASSWORD':"AdMiN@1234",
         "PORT":"3306"
     }
 }
+
+
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': [
