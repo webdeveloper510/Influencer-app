@@ -30,8 +30,8 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ["13.50.106.134"]
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["13.50.106.134"]
 
 
 # Application definition
@@ -113,11 +113,11 @@ WSGI_APPLICATION = 'restapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'restapp_db',
-        'USER':'root',
-        "HOST":"localhost",
+        'NAME':config("NAME"),
+        'USER':config("USER"),
+        "HOST":config("HOST"),
         'PASSWORD':config("PASSWORD"),
-        "PORT":"3306"
+        "PORT":config("PORT")
     }
 }
 
