@@ -7,7 +7,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics, status
 
 
-
+#GET INFLUENCER LIST API
 class InfluencerList(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes=[JWTAuthentication]

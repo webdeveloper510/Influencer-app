@@ -20,8 +20,11 @@ from django.utils.http import urlsafe_base64_decode
 class Login(APIView): 
     def post(self, request):
         username = request.data.get('email')
+        print("------------",username)
         password = request.data.get('password')
+        print("-----------",password)
         user = authenticate(username=username, password=password)
+        
         if user:
             login(request, user)
             refresh=RefreshToken.for_user(user)
@@ -44,7 +47,7 @@ class PasswordResetView(generics.GenericAPIView):
         if user is not None:
             token = PasswordResetTokenGenerator().make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
-            reset_password_link = f'http://127.0.0.1:8000/api/reset-password/{uid}/{token}'
+            reset_password_link = f'http://127.0.0.1:8000/reset-password/{uid}/{token}'
 
             send_mail(
                 'Reset Your Password',
@@ -58,6 +61,7 @@ class PasswordResetView(generics.GenericAPIView):
     
     
 
+#PASSWORD RESET CONFIRM API
 class PasswordResetConfirmView(generics.GenericAPIView):
     serializer_class = PasswordResetConfirmSerializer
 

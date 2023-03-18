@@ -31,7 +31,7 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["13.50.106.134"]
+ALLOWED_HOSTS = ["13.50.106.134","myrefera.com","api.myrefera.com"]
 
 
 # Application definition
@@ -98,28 +98,28 @@ WSGI_APPLICATION = 'restapi.wsgi.application'
 # }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'restapp_db',
-#         'USER':'root',
-#         "HOST":"localhost",
-#         'PASSWORD':"",
-#         "PORT":"3306"
-#     }
-# }
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':config("NAME"),
-        'USER':config("USER"),
-        "HOST":config("HOST"),
-        'PASSWORD':config("PASSWORD"),
-        "PORT":config("PORT")
+        'NAME': 'restapp_db',
+        'USER':'root',
+        "HOST":"localhost",
+        'PASSWORD':"",
+        "PORT":"3306"
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME':config("NAME"),
+#         'USER':config("USER"),
+#         "HOST":config("HOST"),
+#         'PASSWORD':config("PASSWORD"),
+#         "PORT":config("PORT")
+#     }
+# }
 
 
 
@@ -180,11 +180,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST_USER = 'testing18091998@gmail.com'
+EMAIL_HOST_USER = 'testing1632023@gmail.com'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = 'znpzjlzzjyqebpgd'
+EMAIL_HOST_PASSWORD = 'ejjnlqnmtwywiygr'
 
 
 

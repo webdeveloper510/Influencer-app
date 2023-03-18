@@ -12,7 +12,6 @@ class CreateCampaign(APIView):
     def post(self,request):
         serializer=CampaignSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # print("------------",serializer.data)
             serializer.save()
             return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
         

@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
+
+#REGISTER USER API
 class Register(APIView):
         def post(self,request):
             serializer=UserSerializer(data=request.data)
