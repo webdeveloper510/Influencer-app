@@ -30,7 +30,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ["13.50.106.134","myrefera.com","api.myrefera.com"]
 
 
@@ -199,3 +199,4 @@ headers = {"X-Shopify-Access-Token": "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"}
 
 SHOPIFY_API_KEY = config("SHOPIFY_API_KEY")
 SHOPIFY_API_SECRET = config("SHOPIFY_API_SECRET")
+CSRF_TRUSTED_ORIGINS=['https://api.myrefera.com']

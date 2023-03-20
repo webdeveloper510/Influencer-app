@@ -22,8 +22,10 @@ urlpatterns = [
   path("pricerule",CreateCoupon.as_view(),name="pricerule"),
   path("discount",DiscountCoupon.as_view(),name="discount"),
   path("coupon",CouponList.as_view(),name="coupon"),
-  path("install/",InstallView.as_view(),name="install"),
-  path("auth/",AuthView.as_view(),name="auth"),
+  # path("install/",InstallView.as_view(),name="install"),
+  # path("auth/",AuthView.as_view(),name="auth"),
+  path('install/', InstallView.as_view(), name='install'),
+  path('callback/', CallbackView.as_view(), name='callback'),
 
 
   #Influencer url
