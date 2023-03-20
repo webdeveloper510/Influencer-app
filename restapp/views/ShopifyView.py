@@ -9,7 +9,8 @@ import hashlib
 class InstallView(APIView):
     def get(self, request):
         shop = request.query_params.get('shop')
-        redirect_uri = request.build_absolute_uri('/callback/')
+        # redirect_uri = request.build_absolute_uri('/callback/')
+        redirect_uri="https://api.myrefera.com/callback/"
         scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
         url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
         return Response({'url': url})
