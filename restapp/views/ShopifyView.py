@@ -14,12 +14,13 @@ class InstallView(APIView):
         print("enter in installl")
         # Check if the 'shop' parameter is present in the query string
         shop = request.query_params.get('shop')
+        redirect_uri="https://api.myrefera.com/callback/"
+        scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
         if not shop:
             return Response({'error': 'Missing shop parameter'}, status=400)
 
         # Redirect the user to the Shopify authorization page
-        auth_url = 'https://{0}/admin/oauth/authorize?client_id={1}&scope={2}&redirect_uri={3}'.format(
-            shop, SHOPIFY_API_KEY, 'read_products', "https://api.myrefera.com/callback/")
+        auth_url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
         
         return redirect(auth_url)
 
