@@ -6,11 +6,12 @@ import requests
 import hmac
 import hashlib
 from django.http import JsonResponse
-from rest_framework.reverse import reverse
+
 
 
 class InstallView(APIView):
     def get(self, request):
+        print("enter in installl")
         # Check if the 'shop' parameter is present in the query string
         shop = request.query_params.get('shop')
         if not shop:
@@ -24,11 +25,13 @@ class InstallView(APIView):
 
 class CallbackView(APIView):
     def get(self, request):
+        print("enter in callback")
         # Retrieve the temporary code from the Shopify callback
         code = request.GET.get('code')
-
+        shop = request.GET.get('shop')
         # Exchange the temporary code for an access token
-        token_url = 'https://{0}/admin/oauth/access_token'.format(request.GET.get('shop'))
+        
+        token_url = 'https://{shop}/admin/oauth/access_token'
         token_data = {
             'client_id': SHOPIFY_API_KEY,
             'client_secret': SHOPIFY_API_SECRET,
