@@ -5,40 +5,110 @@ from restapi.settings import SHOPIFY_API_KEY,SHOPIFY_API_SECRET
 import requests
 import hmac
 import hashlib
+from django.http import JsonResponse
+
 
 class InstallView(APIView):
     def get(self, request):
         shop = request.query_params.get('shop')
-        # redirect_uri = request.build_absolute_uri('/callback/')
         redirect_uri="https://api.myrefera.com/callback/"
-        scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
-        url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
-        return Response({'url': url})
+        scope = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
+
+        install_url = f'https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={scope}&redirect_uri={redirect_uri}'
+        return Response({'install_url': install_url})
 
 class CallbackView(APIView):
     def get(self, request):
         shop = request.query_params.get('shop')
         code = request.query_params.get('code')
-        hmac_digest = request.query_params.get('hmac')
-        if not self.validate_hmac(request.GET, hmac_digest):
-            return Response({'error': 'Invalid HMAC'})
-        access_token = self.get_access_token(shop, code)
-        return Response({'access_token': access_token})
-
-    def validate_hmac(self, params, hmac_digest):
-        sorted_params = '&'.join([f"{key}={params[key]}" for key in sorted(params)])
-        secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
-        hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
-        return hmac_calculated == hmac_digest
-
-    def get_access_token(self, shop, code):
-        url = f"https://{shop}/admin/oauth/access_token"
-        payload = {
-            "client_id": SHOPIFY_API_KEY,
-            "client_secret": SHOPIFY_API_SECRET,
-            "code": code,
+        # api_key = 'your_api_key'
+        # api_secret = 'your_api_secret'
+        access_token_url = f'https://{shop}/admin/oauth/access_token'
+        data = {
+            'client_id': SHOPIFY_API_KEY,
+            'client_secret': SHOPIFY_API_SECRET,
+            'code': code
         }
-        response = requests.post(url, json=payload)
+        response = requests.post(access_token_url, data=data)
+        response_json = response.json()
+        access_token = response_json['access_token']
+        # Use the access_token to make API requests to Shopify
+        return JsonResponse({'access_token': access_token})
+
+
+# class InstallView(APIView):
+#     def get(self, request):
+#         shop = request.query_params.get('shop')
+#         # redirect_uri = request.build_absolute_uri('/callback/')
+#         redirect_uri="https://api.myrefera.com/callback/"
+#         scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
+#         url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
+#         return Response({'url': url})
+
+# class CallbackView(APIView):
+#     def get(self, request):
+        
+#         shop = request.query_params.get('shop')
+#         code = request.query_params.get('code')
+#         hmac_digest = request.query_params.get('hmac')
+        
+#         if not self.validate_hmac(request.GET, hmac_digest):
+#             return Response({'error': 'Invalid HMAC'})
+#         access_token = self.get_access_token(shop, code)
+#         return Response({'access_token': access_token})
+
+#     def validate_hmac(self, params, hmac_digest):
+#         print('Entered')
+        
+#         sorted_params = '&'.join([f"{key}={params[key]}" for key in sorted(params)])
+        
+#         secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
+#         hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
+#         return hmac_calculated == hmac_digest
+
+#     def get_access_token(self, shop, code):
+#         url = f"https://{shop}/admin/oauth/access_token"
+#         payload = {
+#             "client_id": SHOPIFY_API_KEY,
+#             "client_secret": SHOPIFY_API_SECRET,
+#             "code": code,
+#         }
+#         response = requests.post(url, json=payload)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # #INSTALL APP IN SHOPIFY API
 # class InstallView(View):
