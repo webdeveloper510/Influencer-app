@@ -12,9 +12,9 @@ class InstallView(APIView):
     def get(self, request):
         shop = request.query_params.get('shop')
         redirect_uri="https://api.myrefera.com/callback/"
-        scope = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
+        scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
 
-        install_url = f'https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={scope}&redirect_uri={redirect_uri}'
+        install_url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
         return Response({'install_url': install_url})
 
 class CallbackView(APIView):
