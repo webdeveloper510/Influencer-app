@@ -24,26 +24,26 @@ class InstallView(APIView):
         
         return redirect(auth_url)
 
-class CallbackView(APIView):
-    print("enter-------------------------------")
-    def get(self, request):
-        print("enter in callback")
-        # Retrieve the temporary code from the Shopify callback
-        code = request.GET.get('code')
-        shop = request.GET.get('shop')
-        # Exchange the temporary code for an access token
+# class CallbackView(APIView):
+#     print("enter-------------------------------")
+#     def get(self, request):
+#         print("enter in callback")
+#         # Retrieve the temporary code from the Shopify callback
+#         code = request.GET.get('code')
+#         shop = request.GET.get('shop')
+#         # Exchange the temporary code for an access token
         
-        token_url = 'https://{shop}/admin/oauth/access_token'
-        token_data = {
-            'client_id': SHOPIFY_API_KEY,
-            'client_secret': SHOPIFY_API_SECRET,
-            'code': code
-        }
-        response = requests.post(token_url, data=token_data)
+#         token_url = 'https://{shop}/admin/oauth/access_token'
+#         token_data = {
+#             'client_id': SHOPIFY_API_KEY,
+#             'client_secret': SHOPIFY_API_SECRET,
+#             'code': code
+#         }
+#         response = requests.post(token_url, data=token_data)
 
-        # Store the access token in the session or database
-        access_token = response.json().get('access_token')
-        request.session['shopify_access_token'] = access_token
+#         # Store the access token in the session or database
+#         access_token = response.json().get('access_token')
+#         request.session['shopify_access_token'] = access_token
 
         # Redirect the user to the success page
         # return redirect('success_page')
@@ -59,35 +59,35 @@ class CallbackView(APIView):
 #         url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
 #         return Response({'url': url})
 
-# class CallbackView(APIView):
-#     def get(self, request):
+class CallbackView(APIView):
+    def get(self, request):
         
-#         shop = request.query_params.get('shop')
-#         code = request.query_params.get('code')
-#         hmac_digest = request.query_params.get('hmac')
+        shop = request.query_params.get('shop')
+        code = request.query_params.get('code')
+        hmac_digest = request.query_params.get('hmac')
         
-#         if not self.validate_hmac(request.GET, hmac_digest):
-#             return Response({'error': 'Invalid HMAC'})
-#         access_token = self.get_access_token(shop, code)
-#         return Response({'access_token': access_token})
+        if not self.validate_hmac(request.GET, hmac_digest):
+            return Response({'error': 'Invalid HMAC'})
+        access_token = self.get_access_token(shop, code)
+        return Response({'access_token': access_token})
 
-#     def validate_hmac(self, params, hmac_digest):
-#         print('Entered')
+    def validate_hmac(self, params, hmac_digest):
+        print('Entered')
         
-#         sorted_params = '&'.join([f"{key}={params[key]}" for key in sorted(params)])
+        sorted_params = '&'.join([f"{key}={params[key]}" for key in sorted(params)])
         
-#         secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
-#         hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
-#         return hmac_calculated == hmac_digest
+        secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
+        hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
+        return hmac_calculated == hmac_digest
 
-#     def get_access_token(self, shop, code):
-#         url = f"https://{shop}/admin/oauth/access_token"
-#         payload = {
-#             "client_id": SHOPIFY_API_KEY,
-#             "client_secret": SHOPIFY_API_SECRET,
-#             "code": code,
-#         }
-#         response = requests.post(url, json=payload)
+    def get_access_token(self, shop, code):
+        url = f"https://{shop}/admin/oauth/access_token"
+        payload = {
+            "client_id": SHOPIFY_API_KEY,
+            "client_secret": SHOPIFY_API_SECRET,
+            "code": code,
+        }
+        response = requests.post(url, json=payload)
 
 
 
