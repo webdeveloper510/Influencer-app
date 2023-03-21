@@ -66,8 +66,8 @@ class CallbackView(APIView):
         code = request.query_params.get('code')
         hmac_digest = request.query_params.get('hmac')
         print("----------------------------",hmac_digest)
-        print("------------------------",request.GET)
         if not self.validate_hmac(request.GET, hmac_digest):
+            print("hmac_digest",hmac_digest)
             return Response({'error': 'Invalid HMAC'})
         access_token = self.get_access_token(shop, code)
         return Response({'access_token': access_token})
@@ -78,6 +78,7 @@ class CallbackView(APIView):
         sorted_params = '&'.join([f"{key}={params[key]}" for key in sorted(params)])
         print("sorted",sorted_params)
         secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
+        print("secret",secret)
         hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
         print("hmac_calculated",hmac_calculated)
         return hmac_calculated == hmac_digest
