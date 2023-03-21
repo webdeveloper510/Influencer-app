@@ -65,7 +65,8 @@ class CallbackView(APIView):
         shop = request.query_params.get('shop')
         code = request.query_params.get('code')
         hmac_digest = request.query_params.get('hmac')
-        
+        print("----------------------------",hmac_digest)
+        print("------------------------",request.GET)
         if not self.validate_hmac(request.GET, hmac_digest):
             return Response({'error': 'Invalid HMAC'})
         access_token = self.get_access_token(shop, code)
