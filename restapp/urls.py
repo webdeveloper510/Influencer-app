@@ -25,7 +25,7 @@ urlpatterns = [
   # path("install/",InstallView.as_view(),name="install"),
   # path("auth/",AuthView.as_view(),name="auth"),
   path('install/', InstallView.as_view(), name='install'),
-  path('callback/', CallbackView.as_view(), name='callback'),
+  path('callback/', CallbackView.as_view(), name='shopify_callback'),
 
 
   #Influencer url

@@ -6,33 +6,42 @@ import requests
 import hmac
 import hashlib
 from django.http import JsonResponse
+from rest_framework.reverse import reverse
 
 
 class InstallView(APIView):
     def get(self, request):
+        # Check if the 'shop' parameter is present in the query string
         shop = request.query_params.get('shop')
-        redirect_uri="https://api.myrefera.com/callback/"
-        scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
+        if not shop:
+            return Response({'error': 'Missing shop parameter'}, status=400)
 
-        install_url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
-        return Response({'install_url': install_url})
+        # Redirect the user to the Shopify authorization page
+        auth_url = 'https://{0}/admin/oauth/authorize?client_id={1}&scope={2}&redirect_uri={3}'.format(
+            shop, SHOPIFY_API_KEY, 'read_products', "https://api.myrefera.com/callback/")
+        
+        return redirect(auth_url)
 
 class CallbackView(APIView):
     def get(self, request):
-        shop = request.query_params.get('shop')
-        code = request.query_params.get('code')
-        # api_key = 'your_api_key'
-        # api_secret = 'your_api_secret'
-        access_token_url = f'https://{shop}/admin/oauth/access_token'
-        data = {
+        # Retrieve the temporary code from the Shopify callback
+        code = request.GET.get('code')
+
+        # Exchange the temporary code for an access token
+        token_url = 'https://{0}/admin/oauth/access_token'.format(request.GET.get('shop'))
+        token_data = {
             'client_id': SHOPIFY_API_KEY,
             'client_secret': SHOPIFY_API_SECRET,
             'code': code
         }
-        response = requests.post(access_token_url, data=data)
-        response_json = response.json()
-        access_token = response_json['access_token']
-        # Use the access_token to make API requests to Shopify
+        response = requests.post(token_url, data=token_data)
+
+        # Store the access token in the session or database
+        access_token = response.json().get('access_token')
+        request.session['shopify_access_token'] = access_token
+
+        # Redirect the user to the success page
+        # return redirect('success_page')
         return JsonResponse({'access_token': access_token})
 
 
