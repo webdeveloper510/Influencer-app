@@ -47,7 +47,7 @@ class InstallView(APIView):
 
         # Redirect the user to the success page
         # return redirect('success_page')
-        return JsonResponse({'access_token': access_token})
+        # return JsonResponse({'access_token': access_token})
 
 
 # class InstallView(APIView):
@@ -76,9 +76,10 @@ class CallbackView(APIView):
         print('Entered')
         
         sorted_params = '&'.join([f"{key}={params[key]}" for key in sorted(params)])
-        
+        print("sorted",sorted_params)
         secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
         hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
+        print("hmac_calculated",hmac_calculated)
         return hmac_calculated == hmac_digest
 
     def get_access_token(self, shop, code):
