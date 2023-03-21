@@ -25,6 +25,7 @@ class InstallView(APIView):
         return redirect(auth_url)
 
 class CallbackView(APIView):
+    print("enter-------------------------------")
     def get(self, request):
         print("enter in callback")
         # Retrieve the temporary code from the Shopify callback
