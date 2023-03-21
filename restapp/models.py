@@ -32,7 +32,7 @@ class User(AbstractBaseUser,PermissionsMixin):
 
 class Store(models.Model):
   store_name=models.CharField(max_length=255,null=True,blank=True)
-  store_url=models.CharField(max_length=255,null=True,blank=True)
+  code=models.CharField(max_length=255,null=True,blank=True)
   token=models.CharField(max_length=255,blank=True,null=True)
 
 

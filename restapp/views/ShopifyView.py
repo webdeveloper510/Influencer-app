@@ -6,7 +6,7 @@ import requests
 import hmac
 import hashlib
 from django.http import JsonResponse
-
+from restapp.models import *
 
 
 class InstallView(APIView):
@@ -74,6 +74,11 @@ class CallbackView(APIView):
         print("hmac_calculated",hmac_calculated)
         if not(request.GET,hmac_calculated):
             return Response({'error': 'Invalid HMAC'})
+        store_obj=Store()
+        store_obj.store_name=shop
+        store_obj.code=code
+        store_obj.token=hmac_calculated
+        store_obj.save()
         
         access_token = self.get_access_token(shop, code)
         print("tokensss",(access_token))
