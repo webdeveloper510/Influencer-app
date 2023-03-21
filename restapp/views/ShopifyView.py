@@ -67,7 +67,7 @@ class CallbackView(APIView):
         hmac_digest = request.query_params.get('hmac')
         print("----------------------------",hmac_digest)
         print("----------------------------",request.GET.dict())
-        if not self.validate_hmac(request.GET.dict(),hmac_digest):
+        if not self.validate_hmac(request.GET.dict("hmac"),hmac_digest):
             print(self.validate_hmac)
             print("hmac_digest",hmac_digest)
             return Response({'error': 'Invalid HMAC'})
