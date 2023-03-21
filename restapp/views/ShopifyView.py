@@ -80,7 +80,7 @@ class CallbackView(APIView):
         
         access_token = self.get_access_token(shop, code)
         print("token",access_token)
-        return Response({'access_token': access_token})
+        return Response({'access_token': access_token["access_token"]})
 
     def validate_hmac(self, params, hmac_digest):
         print('Entered')
