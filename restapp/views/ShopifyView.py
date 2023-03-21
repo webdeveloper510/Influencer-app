@@ -100,6 +100,7 @@ class CallbackView(APIView):
             "code": code,
         }
         response = requests.post(url, json=payload)
+        print("-----------",response)
 
 
 
