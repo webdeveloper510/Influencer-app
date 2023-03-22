@@ -19,8 +19,8 @@ class InstallView(APIView):
         for i in get_shop:
             print(i.store_name)
         # print(get_shop.store_name)
-        if shop in i.store_name:
-            return HttpResponse("App aleady exists")
+        # if shop in i.store_name:
+        #     return HttpResponse("App aleady exists")
         
         redirect_uri="https://api.myrefera.com/callback/"
         scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
