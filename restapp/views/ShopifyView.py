@@ -60,7 +60,7 @@ class CallbackView(APIView):
         #     "notification_url": "http://merchant.com/notifications"
         # }
 
-        signature = hmac.new(secret, X_Login + X_Date, hashlib.sha256).hexdigest()
+        signature = hmac.new(secret, X_Login.encode('utf-8') + X_Date.encode('utf-8'), hashlib.sha256).hexdigest()
        
         print("-----------------",signature)
         # if not(request.GET,hmac_calculated):
