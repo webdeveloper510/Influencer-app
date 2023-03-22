@@ -45,22 +45,22 @@ class CallbackView(APIView):
         secret = "u6OZW3sP99ohNjZL7smqz0Crc5gZ9gnsy"
         X_Login = "x_login 18GtxHkoYe"
         X_Date = "2023-03-22T05:05:14.902Z"
-        RequestBody = {
-            "amount": 1000,
-            "currency" : "CLP",
-            "country": "CL",
-            "payment_method_id" : "SP",
-            "payment_method_flow" : "DIRECT",
-            "payer": {
-                "name": "Pedro Gomes",
-                "email": "pedrogomes@dlocal.com",
-                "document": "3.903.673.V"
-            },
-            "order_id": "jhg4v34v5345",
-            "notification_url": "http://merchant.com/notifications"
-        }
+        # RequestBody = {
+        #     "amount": 1000,
+        #     "currency" : "CLP",
+        #     "country": "CL",
+        #     "payment_method_id" : "SP",
+        #     "payment_method_flow" : "DIRECT",
+        #     "payer": {
+        #         "name": "Pedro Gomes",
+        #         "email": "pedrogomes@dlocal.com",
+        #         "document": "3.903.673.V"
+        #     },
+        #     "order_id": "jhg4v34v5345",
+        #     "notification_url": "http://merchant.com/notifications"
+        # }
 
-        signature = hmac.new(secret, X_Login+X_Date+RequestBody, hashlib.sha256).hexdigest()
+        signature = hmac.new(secret, X_Login + X_Date, hashlib.sha256).hexdigest()
        
         print("-----------------",signature)
         # if not(request.GET,hmac_calculated):
