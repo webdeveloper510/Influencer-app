@@ -43,16 +43,17 @@ class CallbackView(APIView):
     
         access_token = self.get_access_token(shop, code)
         print("enter22")
-        store_obj=Store()
-        store_obj.store_name=shop
-        store_obj.code=code
-        store_obj.token=hmac_calculated
-        store_obj.save()
+       
         
         return Response({"success":"app_created"})
 
 
     def get_access_token(self, shop, code):
+        store_obj=Store()
+        store_obj.store_name=shop
+        store_obj.code=code
+        
+        store_obj.save()
         url = f"https://{shop}/admin/oauth/access_token"
         payload = {
             "client_id": SHOPIFY_API_KEY,
