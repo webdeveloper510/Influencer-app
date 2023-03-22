@@ -23,7 +23,7 @@ class InstallView(APIView):
             for i in get_shop:
                 print(i.store_name)
             if shop in i.store_name:
-                return HttpResponse("Shop aleady exists")
+                return Response({'message': 'Shop already exists'})
         auth_url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
         return redirect(auth_url)
     
@@ -42,6 +42,7 @@ class CallbackView(APIView):
             return Response({'error': 'Invalid HMAC'})
     
         access_token = self.get_access_token(shop, code)
+        print("enter22")
         store_obj=Store()
         store_obj.store_name=shop
         store_obj.code=code
