@@ -41,16 +41,17 @@ class CallbackView(APIView):
         if not(request.GET,hmac_calculated):
             return Response({'error': 'Invalid HMAC'})
     
-        access_token = self.get_access_token(shop, code)
+        access_token = self.get_access_token(shop, code,hmac_calculated)
         print("enter22")
        
         
         return Response({"success":"app_created"})
 
 
-    def get_access_token(self, shop, code):
+    def get_access_token(self, shop, code,hmac_calculated):
         store_obj=Store()
         store_obj.store_name=shop
+        store_obj.token=hmac_calculated
         store_obj.code=code
         
         store_obj.save()
