@@ -34,6 +34,8 @@ class Store(models.Model):
   store_name=models.CharField(max_length=255,null=True,blank=True)
   code=models.CharField(max_length=255,null=True,blank=True)
   token=models.CharField(max_length=255,blank=True,null=True)
+  created_at = models.DateTimeField(auto_now_add=True,null=True)
+  updated_at =  models.DateTimeField(auto_now=True)
 
 
 class Campaign(models.Model):
@@ -41,4 +43,5 @@ class Campaign(models.Model):
   product_name=models.CharField(max_length=255,default="")
   influencer_name=models.CharField(max_length=255,default="")
   coupon=models.CharField(max_length=255,default="")
-  
+  created_at = models.DateTimeField(auto_now_add=True,null=True)
+  updated_at =  models.DateTimeField(auto_now=True)
