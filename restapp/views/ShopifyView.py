@@ -42,7 +42,7 @@ class CallbackView(APIView):
         # hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
         # print("hmac_calculated",hmac_calculated)   # def validate_hmac(self, params, hmac_digest):
       
-        secret = bytes("u6OZW3sP99ohNjZL7smqz0Crc5gZ9gnsy")
+        secret = bytes("u6OZW3sP99ohNjZL7smqz0Crc5gZ9gnsy",'utf-8')
         X_Login = "x_login 18GtxHkoYe"
         X_Date = "2023-03-22T05:05:14.902Z"
         # RequestBody = {
