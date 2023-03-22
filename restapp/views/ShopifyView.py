@@ -14,21 +14,19 @@ class InstallView(APIView):
     def get(self, request):
         
         shop = request.query_params.get('shop')
-        if shop:
-            get_shop=Store.objects.all()
+        redirect_uri="https://api.myrefera.com/callback/"
+        scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
+        if not shop:
+            return Response({'error': 'Missing shop parameter'}, status=400)
+        get_shop=Store.objects.all()
+        if get_shop:
             for i in get_shop:
                 print(i.store_name)
-            # print(get_shop.store_name)
             if shop in i.store_name:
                 return HttpResponse("Shop aleady exists")
-            
-            redirect_uri="https://api.myrefera.com/callback/"
-            scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
-            if not shop:
-                return Response({'error': 'Missing shop parameter'}, status=400)
-            auth_url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
-            return redirect(auth_url)
-        return Response("Please enter Shopname")
+        auth_url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
+        return redirect(auth_url)
+    
 
 class CallbackView(APIView):
     def get(self, request):
