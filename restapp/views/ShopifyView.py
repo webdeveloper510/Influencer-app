@@ -16,7 +16,9 @@ class InstallView(APIView):
         shop = request.query_params.get('shop')
         
         get_shop=Store.objects.all()
-        print(get_shop.store_name)
+        for i in get_shop:
+            print(i.store_name)
+        # print(get_shop.store_name)
         
         redirect_uri="https://api.myrefera.com/callback/"
         scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
