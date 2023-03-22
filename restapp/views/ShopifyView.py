@@ -14,21 +14,21 @@ class InstallView(APIView):
     def get(self, request):
         
         shop = request.query_params.get('shop')
-        
-        get_shop=Store.objects.all()
-        for i in get_shop:
-            print(i.store_name)
-        # print(get_shop.store_name)
-        # if shop in i.store_name:
-        #     return HttpResponse("App aleady exists")
-        
-        redirect_uri="https://api.myrefera.com/callback/"
-        scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
-        if not shop:
-            return Response({'error': 'Missing shop parameter'}, status=400)
-        auth_url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
-        return redirect(auth_url)
-
+        if shop:
+            get_shop=Store.objects.all()
+            for i in get_shop:
+                print(i.store_name)
+            # print(get_shop.store_name)
+            if shop in i.store_name:
+                return HttpResponse("Shop aleady exists")
+            
+            redirect_uri="https://api.myrefera.com/callback/"
+            scopes = ['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files']
+            if not shop:
+                return Response({'error': 'Missing shop parameter'}, status=400)
+            auth_url = f"https://{shop}/admin/oauth/authorize?client_id={SHOPIFY_API_KEY}&scope={'+'.join(scopes)}&redirect_uri={redirect_uri}"
+            return redirect(auth_url)
+        return Response("Please enter Shopname")
 
 class CallbackView(APIView):
     def get(self, request):
@@ -37,55 +37,21 @@ class CallbackView(APIView):
         code = request.query_params.get('code')
         hmac_digest = request.query_params.get('hmac')    
         params=request.GET
-        # sorted_params='&'.join([f"{key}={params[key]}" for key in sorted(params)])
-        # secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
-        # hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
-        # print("hmac_calculated",hmac_calculated)   # def validate_hmac(self, params, hmac_digest):
-      
-        secret = bytes("u6OZW3sP99ohNjZL7smqz0Crc5gZ9gnsy",'utf-8')
-        X_Login = "x_login 18GtxHkoYe"
-        X_Date = "2023-03-22T05:05:14.902Z"
-        
-        RequestBody = {
-            "amount": 1000,
-            "currency" : "CLP",
-            "country": "CL",
-            "payment_method_id" : "SP",
-            "payment_method_flow" : "DIRECT",
-            "payer": {
-                "name": "Pedro Gomes",
-                "email": "pedrogomes@dlocal.com",
-                "document": "3.903.673.V"
-            },
-            "order_id": "jhg4v34v5345",
-            "notification_url": "http://merchant.com/notifications"
-        }
-        sorted_params='&'.join([f"{key}={RequestBody[key]}" for key in sorted(RequestBody)])
-        signature = hmac.new(secret, X_Login.encode('utf-8') + X_Date.encode('utf-8') +sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
-       
-        print("-----------------",signature)
-        # if not(request.GET,hmac_calculated):
-        #     return Response({'error': 'Invalid HMAC'})
+        sorted_params='&'.join([f"{key}={params[key]}" for key in sorted(params)])
+        secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
+        hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
+        if not(request.GET,hmac_calculated):
+            return Response({'error': 'Invalid HMAC'})
     
-        # access_token = self.get_access_token(shop, code)
-        # store_obj=Store()
-        # store_obj.store_name=shop
-        # store_obj.code=code
-        # store_obj.token=hmac_calculated
-        # store_obj.save()
+        access_token = self.get_access_token(shop, code)
+        store_obj=Store()
+        store_obj.store_name=shop
+        store_obj.code=code
+        store_obj.token=hmac_calculated
+        store_obj.save()
         
         return Response({"success":"app_created"})
 
-    # def validate_hmac(self, params, hmac_digest):
-    #     print('Entered')
-    #     print("hmac_diii",hmac_digest)
-    #     sorted_params = '&'.join([f"{key}={params[key]}" for key in sorted(params)])
-      
-    #     secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
-    #     hmac_calculated = hmac.new(secret, sorted_params.encode('utf-8'), hashlib.sha256).hexdigest()
-    #     print("hmac_calculated",hmac_calculated)
-    #     print("-0-0-0-0-0",hmac_calculated ==hmac_digest)
-    #     return hmac_calculated == hmac_digest
 
     def get_access_token(self, shop, code):
         url = f"https://{shop}/admin/oauth/access_token"
