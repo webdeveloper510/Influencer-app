@@ -30,10 +30,17 @@ class InstallView(APIView):
 
 class CallbackView(APIView):
     def get(self, request):
+      
         
         shop = request.query_params.get('shop')
         code = request.query_params.get('code')
         hmac_digest = request.query_params.get('hmac')    
+        get_shop=Store.objects.all()
+        if get_shop:
+            for i in get_shop:
+                print(i.store_name)
+            if shop in i.store_name:
+                return redirect("https://admin.shopify.com/store/marketplacee-app/apps/marketplace-49")
         params=request.GET
         sorted_params='&'.join([f"{key}={params[key]}" for key in sorted(params)])
         secret = bytes(SHOPIFY_API_SECRET, 'utf-8')
