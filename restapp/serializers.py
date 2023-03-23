@@ -15,6 +15,11 @@ class UserSerializer(serializers.ModelSerializer):
      
         return super(UserSerializer, self).create(validated_data) 
     
+    def update(self, instance, validated_data):
+        instance.password = validated_data.get('password', instance.password)
+        validated_data['password'] = make_password(instance.password)       
+        return super(UserSerializer, self).update(instance,validated_data)
+    
     
     class Meta:
         
@@ -81,3 +86,42 @@ class CampaignSerializer(serializers.ModelSerializer):
                 'influencer_name': {'required': True},
                 'coupon': {'required': True}
             }
+
+
+
+class InfluencerSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        print(password)
+        validated_data['password'] = make_password(password)       
+     
+        return super(UserSerializer, self).create(validated_data) 
+    
+    def update(self, instance, validated_data):
+        instance.password = validated_data.get('password', instance.password)
+        validated_data['password'] = make_password(instance.password)       
+        return super(UserSerializer, self).update(instance,validated_data)
+    
+    
+    class Meta:
+        
+        model=User
+        fields=["username","email","password","country"]
+        extra_kwargs = {
+            'password': {'required': True},
+            'username': {'required': True}
+        }
+    
+    def validate_password(self,password):
+        if len(password)< 8:
+            raise serializers.ValidationError("Password must be more than 8 character.")
+        if not any(char.isdigit() for char in password):
+            raise serializers.ValidationError('Password must contain at least one digit.')
+        return password
+    
+    def validate_country(self,country):
+        if country.isalpha() == False:
+            raise serializers.ValidationError("Country must be in string")
+        return country

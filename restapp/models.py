@@ -17,9 +17,7 @@ class User(AbstractBaseUser,PermissionsMixin):
 		Unselect this instead of deleting accounts.')
     created_at = models.DateTimeField(auto_now_add=True,null=True)
     updated_at =  models.DateTimeField(auto_now=True)
-    country  = models.CharField(max_length=255,default="")
     
-   
     
 
     USERNAME_FIELD 	='email'
@@ -31,6 +29,7 @@ class User(AbstractBaseUser,PermissionsMixin):
         return self.email
 
 class Store(models.Model):
+  userid=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
   store_name=models.CharField(max_length=255,null=True,blank=True)
   code=models.CharField(max_length=255,null=True,blank=True)
   token=models.CharField(max_length=255,blank=True,null=True)
@@ -39,9 +38,26 @@ class Store(models.Model):
 
 
 class Campaign(models.Model):
+  userid=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+  Influencerid=models.ForeignKey("Influencer",on_delete=models.CASCADE,null=True)
   campaign_name=models.CharField(max_length=255,default="")
   product_name=models.CharField(max_length=255,default="")
   influencer_name=models.CharField(max_length=255,default="")
   coupon=models.CharField(max_length=255,default="")
   created_at = models.DateTimeField(auto_now_add=True,null=True)
   updated_at =  models.DateTimeField(auto_now=True)
+
+
+class Influencer(models.Model):
+  userid=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+  username  = models.CharField(max_length=255,default="")
+  email 		= models.EmailField(_('email'),unique=True)
+  password    = models.CharField(max_length=255,default="")
+  is_staff 	= models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.')
+  is_active 	= models.BooleanField(default=True,
+  help_text='Designates whether this user should be treated as active.\
+  Unselect this instead of deleting accounts.')
+  created_at = models.DateTimeField(auto_now_add=True,null=True)
+  updated_at =  models.DateTimeField(auto_now=True)
+  country  = models.CharField(max_length=255,default="")
+  

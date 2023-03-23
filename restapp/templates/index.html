@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <title>Document</title>
+    <style>
+        *, body {
+            padding: 0;
+        }
+
+        .buttons .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: fit-content;
+            min-width: 120px;
+            color: #fff;
+            background-color: #1032bb;
+            border-radius: 40px;
+            text-decoration: none;
+            padding: 8px 24px;
+        }
+
+        .home .container-fluid {
+            padding: 0 !important;
+        }
+
+        .home .container p {
+            margin-bottom: 0;
+        }
+
+        .home .home-side {
+            background-color: #1032bb;
+            padding: 2rem 1rem;
+        }
+
+        .home .home-container {
+            padding: 0 !important;
+        }
+
+        .home-container .home-content .content-box .content-list .customer-box {
+            background: #e0effe;
+            border-radius: 5px;
+        }
+
+        .home .home-container .home-announcement {
+            background: #edf4fb;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            box-shadow: 0 0 2px rgba(0, 0, 0, .3);
+        }
+
+        .home-container .home-content .content-box .management-list .management-box {
+            border: 1px solid #000;
+            border-radius: 10px;
+            padding: 8px 16px;
+            margin-bottom: 20px;
+        }
+
+        @media only screen and (min-width: 768px) {
+            .home-container .home-content .content-box .content-list .customer-box {
+                width: 48%;
+                flex: 1 0 48%;
+                max-width: 48%;
+            }
+
+            .home-container .home-content .content-box .management-list .management-box {
+                width: fit-content;
+            }
+
+            .home-container .home-content .content-box .management-list .management-box span {
+                font-size: 14px;
+            }
+
+            .home-container .home-content .content-box .management-list .management-box {
+                margin: 0 11px 20px;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .home-container .home-content .content-box .content-list .customer-box {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .home-container .home-content .content-box .content-list .customer-box .list-content {
+                width: 65%;
+            }
+
+            .home-container .home-content .content-box .content-list .customer-box .buttons {
+                width: fit-content;
+                height: fit-content;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <section class="home">
+        <div class="container-fluid d-md-flex">
+            <div class="home-side col col-md-2"></div>
+            <div class="home-container col col-md-10">
+                <div class="home-announcement d-flex px-3 px-md-4 px-lg-5">
+                    <img src="" alt="">
+                    <p class="mb-0">UpPromote Affiliate & Referral</p>
+                </div>
+                <div class="home-content px-3 pt-4 px-md-4 px-lg-5">
+                    <div class="content-box">
+                       <h4 class="fw-bold">Home</h4>
+                       <p>Promote your affiliate program and get quick response</p>
+                       
+                       <div class="content-list-container pt-3">
+                        <p>Customer</p>
+                        <div class="content-list pt-2 row flex-wrap justify-content-between w-100 mx-md-0">
+                            <div class="customer-box col p-3 mb-4">
+                                <div class="list-content">
+                                    <h5>Home</h5>
+                                    <p>Promote your affiliate programe and get quick support</p>
+                                </div>
+                                <div class="buttons mt-3 mt-lg-0">
+                                    <a href="javascript:void(0)" class="button">View Info</a>
+                                </div>
+                            </div>
+                            <div class="customer-box col p-3 mb-4">
+                                <div class="list-content">
+                                    <h5>Home</h5>
+                                    <p>Promote your affiliate programe and get quick support</p>
+                                </div>
+                                <div class="buttons mt-3 mt-lg-0">
+                                    <a href="javascript:void(0)" class="button">View Info</a>
+                                </div>
+                            </div>
+                            <div class="customer-box col p-3 mb-md-4">
+                                <div class="list-content">
+                                    <h5>Home</h5>
+                                    <p>Promote your affiliate programe and get quick support</p>
+                                </div>
+                                <div class="buttons mt-3 mt-lg-0">
+                                    <a href="javascript:void(0)" class="button">View Info</a>
+                                </div>
+                            </div>
+                        </div>
+                       </div>
+                    </div>
+                    <div class="content-box mt-4">
+                        <h3>Management</h3>
+                        <p>Manage your affiliate campaign with basic functions</p>
+                        <div class="management-list mt-3 d-md-flex flex-md-wrap">
+                            <div class="management-box">
+                                <span>Management Programs</span>
+                            </div>
+                            <div class="management-box">
+                                <span>Management Programs</span>
+                            </div>
+                            <div class="management-box">
+                                <span>Management Programs</span>
+                            </div>
+                            <div class="management-box">
+                                <span>Management Programs</span>
+                            </div>
+                            <div class="management-box">
+                                <span>Management Programs</span>
+                            </div>
+                            <div class="management-box">
+                                <span>Management Programs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-box mt-4">
+                        <h3>Settings</h3>
+                        <p>Manage your affiliate campaign with basic functions</p>
+                        <div class="content-list pt-3 row justify-content-between w-100">
+                            <div class="col mb-4 p-3 customer-box">
+                                <div class="list-content">
+                                    <h4>Home</h4>
+                                    <p>Promote your affiliate programe and get quick support</p>
+                                </div>
+                                <div class="buttons mt-3">
+                                    <a href="javascript:void(0)" class="button">View Info</a>
+                                </div>
+                            </div>
+                            <div class="col mb-4 p-3 customer-box">
+                                <div class="list-content">
+                                    <h4>Home</h4>
+                                    <p>Promote your affiliate programe and get quick support</p>
+                                </div>
+                                <div class="buttons mt-3">
+                                    <a href="javascript:void(0)" class="button">View Info</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-box mt-4">
+                        
+                        <div class="events-list mt-3 row justify-content-between w-100">
+                            <div class="col mt-4 customer-box">
+                                <h4 class="mb-3">Events</h4>
+                                <img src="./assets/img/events-1.png" alt="events" class="w-100">
+                            </div>
+                            <div class="col mt-4 customer-box">
+                                <h4 class="mb-3">Resources</h4>
+                                <img src="./assets/img/events-2.png" alt="events" class="w-100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

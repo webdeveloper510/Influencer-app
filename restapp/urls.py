@@ -15,6 +15,7 @@ urlpatterns = [
   path("login",Login.as_view(),name="login"),
   path('password-reset/', PasswordResetView.as_view(),name="password-reset"),
   path('reset-password/<str:uidb64>/<str:token>/', PasswordResetConfirmView.as_view(),name="reset-password"),
+  path("UpdateInfluencer/<int:pk>/",UpdateInfluencer.as_view(),name="UpdateInfluencer"),  
   
   #shopifyapi url
   path("product",ProductList.as_view(),name="product"),
@@ -22,10 +23,9 @@ urlpatterns = [
   path("pricerule",CreateCoupon.as_view(),name="pricerule"),
   path("discount",DiscountCoupon.as_view(),name="discount"),
   path("coupon",CouponList.as_view(),name="coupon"),
-  # path("install/",InstallView.as_view(),name="install"),
-  # path("auth/",AuthView.as_view(),name="auth"),
   path('install/', InstallView.as_view(), name='install'),
   path('callback/', CallbackView.as_view(), name='shopify_callback'),
+  path("index",index,name="index"),
 
 
   #Influencer url

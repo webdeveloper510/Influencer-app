@@ -57,7 +57,7 @@ class CallbackView(APIView):
         store_obj.save()
         url = f"https://{shop}/admin/oauth/access_token"
         payload = {
-            "client_id": SHOPIFY_API_KEY,
+            "client_id": SHOPIFY_API_KEY,   
             "client_secret": SHOPIFY_API_SECRET,
             "code": code,
         }
@@ -67,9 +67,8 @@ class CallbackView(APIView):
 
 
 
-
-
-
+def index(request):
+    return render(request,"index.html")
 
 
 
